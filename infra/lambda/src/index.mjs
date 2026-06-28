@@ -69,7 +69,7 @@ export async function handler(event){
                 PK: "MOVER",
                 SK: date,
                 ticker: winner.ticker,
-                pctChange = winner.pctChange,
+                pctChange: winner.pctChange,
                 closePrice: winner.closePrice
             }
         })
