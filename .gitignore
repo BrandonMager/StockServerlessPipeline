@@ -1,0 +1,45 @@
+# Env 
+.env.*
+!.env.example
+*.tfvars
+!*.tfvars.example
+*.auto.tfvars
+
+# Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Lambda
+**/lambda/build/
+**/lambda/**/node_modules/
+*.zip
+
+# Frontend
+node_modules/
+frontend/dist/
+frontend/.vite/
+*.local
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+coverage/
+.cache/
+
+# Misc
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
