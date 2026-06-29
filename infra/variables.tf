@@ -46,7 +46,7 @@ variable "lambda_runtime" {
 variable "lambda_timeout" {
   description = "Lambda timeout in seconds"
   type        = number
-  default     = 30
+  default     = 240
 }
 
 variable "market_api_key" {

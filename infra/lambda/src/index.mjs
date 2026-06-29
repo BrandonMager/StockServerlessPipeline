@@ -2,19 +2,15 @@ import { DynamoDBClient } from "@aws-sdk/client-dynamodb"
 import { DynamoDBDocumentClient, PutCommand } from "@aws-sdk/lib-dynamodb"
 
 const TABLE_NAME = process.env.TABLE_NAME
-const TICKERS = process.end.TICKERS.split(",")
+const TICKERS = process.env.TICKERS.split(",")
 const MARKET_API_KEY = process.env.MARKET_API_KEY
 const MASSIVE_BASE_URL = process.env.MASSIVE_BASE_URL || "https://api.massive.com"
 
 const ddb = DynamoDBDocumentClient.from(new DynamoDBClient({}))
 
 async function fetchTicker(ticker, date) {
-    const url = `${MASSIVE_BASE_URL}/v1/open-close/${encodeURIComponent(ticker)}/${date}?adjusted-true`
-    const res = await fetch(url, {
-        headers: {
-            Authorization: `Bearer ${MARKET_API_KEY}`
-        }
-    })
+    const url = `${MASSIVE_BASE_URL}/v1/open-close/${encodeURIComponent(ticker)}/${date}?adjusted=true&apiKey=${encodeURIComponent(MARKET_API_KEY)}`;
+    const res = await fetch(url)
 
     if (res.status === 404) return null
 
@@ -22,8 +18,8 @@ async function fetchTicker(ticker, date) {
         throw new Error(`Massive API ${res.status} for ${ticker} on ${date}`)
     }
 
-    const data = res.json()
-    if(data.status !== OK || typeof data.open !== "number" || typeof data.close !== number){
+    const data = await res.json()
+    if(data.status !== "OK"){
         return null;
     }
 
@@ -47,13 +43,23 @@ export function pickWinner(quotes) {
     }, null)
 }
 
-export async function handler(event){
-    const date = event?.data || new Date().toISOString().slice(0, 10)
-    const results = await Promise.all(
-        TICKERS.map(async (ticker) => [ticker, await fetchTicker(ticker, date)])
-    )
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-    const quotes = Object.fromEntries(results.filter(([ ,quote]) => q !== null))
+export async function handler(event){
+    const date = event?.date || new Date().toISOString().slice(0, 10)
+    const results = []
+
+    for (let i = 0; i < TICKERS.length; i++) {
+        const t = TICKERS[i];
+        results.push([t, await fetchTicker(t, date)]);
+        if (i < TICKERS.length - 1) {
+            await sleep(5000); 
+        }
+    }
+
+    console.log(results)
+    
+    const quotes = Object.fromEntries(results.filter(([ , quote]) => quote !== null))
 
     if(Object.keys(quotes).length === 0){
         console.log(`No quotes for ${date}. Nothing written to DB`)
