@@ -34,7 +34,7 @@ variable "tickers" {
 variable "schedule_expression" {
   description = "EventBridge schedule for cron job (24 hours)"
   type        = string
-  default     = "cron(0 23 * * ? *"
+  default     = "cron(0 23 * * ? *)"
 }
 
 variable "lambda_runtime" {

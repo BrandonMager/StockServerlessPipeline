@@ -25,6 +25,6 @@ resource "aws_lambda_function" "cron" {
 }
 
 resource "aws_cloudwatch_log_group" "cron" {
-  name              = "aws/lambda/${aws_lambda_function.cron.function_name}"
+  name              = "/aws/lambda/${aws_lambda_function.cron.function_name}"
   retention_in_days = 14
 }
