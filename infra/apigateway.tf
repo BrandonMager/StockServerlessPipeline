@@ -29,7 +29,7 @@ resource "aws_lambda_function" "movers" {
   filename         = data.archive_file.lambda.output_path
   source_code_hash = data.archive_file.lambda.output_base64sha256
 
-  handler = "movers.handlers"
+  handler = "movers.handler"
   runtime = var.lambda_runtime
   timeout = 10
 
