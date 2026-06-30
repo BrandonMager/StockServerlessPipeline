@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-feature-settings: "tnum" 1; 
+  }
+  body {
+    font-family: "Inter", system-ui, sans-serif;
+    min-height: 100vh;
+    background: radial-gradient(circle at 18% -8%, #1c2766 0%, #0a0f2c 45%, #060912 100%);
+    background-attachment: fixed;
+  }
+}
