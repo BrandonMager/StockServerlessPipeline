@@ -74,7 +74,7 @@ wins, gain or loss. Ties are broken by the higher closing price. The stored
     ├── vite.config.js           # Vite config + @ path alias
     ├── tailwind.config.js       # dark theme tokens (navy, gain, loss, etc.)
     ├── postcss.config.js        # Tailwind + autoprefixer pipeline
-    ├── styles.css                # @tailwind directives + radial gradient body
+    ├── styles.css               # @tailwind directives + radial gradient body
     └── src/
         ├── main.js              # Vue app entry point
         ├── App.vue              # root component — fetch, state, tab routing
