@@ -26,14 +26,21 @@ export async function handler() {
 
         return {
             statusCode: 200,
-            headers: { "Content-Type" : "application/json"},
+            headers: { 
+                "Content-Type" : "application/json",
+                "Cache-Control": "public, max-age=3600, s-maxage=3600",
+                "Vary": "Origin"
+            },
             body: JSON.stringify(movers)
         }
     } catch (err) {
         console.error("Query failed: ", err)
         return {
             statusCode: 500,
-            headers: { "Content-Type" : "application/json"},
+            headers: { 
+                "Content-Type" : "application/json",
+                "Cache-Control": "no-store"
+            },
             body: JSON.stringify({ error: "Failed to fetch movers"})
         }
     }
