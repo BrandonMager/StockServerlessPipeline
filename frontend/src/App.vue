@@ -2,7 +2,7 @@
 import { ref, onMounted } from "vue";
 import MoverCard from "./components/MoverCard.vue";
 
-const API_URL = import.meta.env.VITE_API_BASE_URL
+const API_URL = `${import.meta.env.VITE_API_BASE_URL}/movers`
 
 const movers = ref([]); 
 const status = ref("loading");
